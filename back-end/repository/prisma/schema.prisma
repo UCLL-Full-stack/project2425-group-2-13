@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guide {
+  id         Int     @id @default(autoincrement())
+  fname      String
+  lname      String
+  email      String  @unique
+  password   String
+  region     String
+}
+
+model Tourist {
+  id         Int     @id @default(autoincrement())
+  fname      String
+  lname      String
+  email      String  @unique
+  password   String
+  region     String
+  tours      Tour[]  @relation("TourParticipants") // Relation to Tours
+}
+
+
+
+model Tour {
+  id              Int           @id @default(autoincrement())
+  name            String
+  description     String
+  distance        Int
+  duration        Int
+  level           String
+  guide_email     String
+  participants    Tourist[]     @relation("TourParticipants") // Relation to Tourists
+  number_of_participants Int
+  day             DateTime
+}
+
+
+
+model Admin {
+  id         Int     @id @default(autoincrement())
+  fname      String
+  lname      String
+  email      String  @unique
+  password   String
+}
+
+//npx prisma migrate dev
