@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Guide_Service from "../../Services/Guide_Service"
 import { useRouter } from 'next/router';
+import Tourist_Service from '@/Services/Tourist_Service';
 
 
 
@@ -25,17 +26,34 @@ const Login = () => {
     if (result !== null) {
       setSuccessMessage('Login Success');
       sessionStorage.setItem("Name",result.fname )
-      router.push('/')
-      const current = result
       sessionStorage.setItem("guide_email", email)
       setIsLoggedIn(true)
-
+      console.log(isLoggedIn)
+      router.push('/')
 
       
     } else {
       setErrorMessage('Invalid Email or Password');
     }
   };
+
+  const tourist_login = async(loginInfo : {email: string; password: string})=>{
+    const result = await Tourist_Service.Get_Tourist(email, password);
+    console.log(result);
+    
+    if (result !== null) {
+      setSuccessMessage('Login Success');
+      sessionStorage.setItem("Name",result.fname)
+      sessionStorage.setItem("tourist_email", email)
+      setIsLoggedIn(true)
+      console.log(isLoggedIn)
+      router.push('/')
+
+      
+    } else {
+      setErrorMessage('Invalid Email or Password');
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,8 +68,11 @@ const Login = () => {
 
     // Call the login function with the email and password
     const loginInfo = { email, password };
-    login(loginInfo);
+    if(isTourGuide){login(loginInfo);}
+    else{tourist_login(loginInfo);}
   };
+
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

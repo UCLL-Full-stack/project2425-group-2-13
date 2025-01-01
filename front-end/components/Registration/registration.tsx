@@ -38,11 +38,11 @@ const TourRegistration = () => {
 
     const tourists_update = async () => {
       const touristData: Tourist = {
-        firstName: firstName, // Assuming you have a state variable for first name
-        lastName: lastName, // Assuming you have a state variable for last name
-        email: email, // Assuming you have a state variable for email
-        password: password, // Assuming you have a state variable for password
-        region: region // Assuming you have a state variable for region
+        firstName: firstName, 
+        lastName: lastName, 
+        email: email, 
+        password: password,
+        region: region 
       };
     
   
@@ -51,6 +51,7 @@ const TourRegistration = () => {
         setSuccessMessage('Tourist account created successfully!');
         sessionStorage.setItem("Name", firstName)
         console.log(touristData)
+        sessionStorage.setItem("tourist_email", email)
   
       }
   

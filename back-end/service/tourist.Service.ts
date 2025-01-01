@@ -88,8 +88,20 @@ const getTouristByEmailAndPassword = async ({
     email: string;
     password: string;
 }): Promise<Tourist | null> => {
-    console.log("Calling Guidedb.getGuide...");
-    return TouristDb.getTouristByEmailAndPassword(email, password);
+
+    
+    console.log("Calling Touristdb.getTourist...");
+    const tourist = await TouristDb.getTouristByEmail(email);
+    if (!tourist) {
+        throw new Error('No tourist with that email found.');
+    }
+    const isValidPassword = await bcrypt.compare(password, tourist.getPassword());
+
+
+     if (!isValidPassword) {
+        throw new Error('Incorrect password');
+    }
+    return TouristDb.getTouristByEmailAndPassword(email, tourist.getPassword());
 }
 
 

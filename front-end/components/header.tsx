@@ -8,14 +8,21 @@ const Header: React.FC = () => {
   const router = useRouter();
   
   useEffect(() => {
-    const storedEmail = sessionStorage.getItem("guide_email");
-    setIsLoggedIn(storedEmail !== null);
+    const stored_Guide_Email = sessionStorage.getItem("guide_email");
+    const stored_Admin_Email = sessionStorage.getItem("admin_email");
+    const stored_Tourist_Email = sessionStorage.getItem("tourist_email");
+    if (stored_Guide_Email) {setIsLoggedIn(true);}
+    if (stored_Admin_Email) {setIsLoggedIn(true);}
+    if (stored_Tourist_Email) {setIsLoggedIn(true);}
+    
   }, []);
 
   const handleLoginLogout = () => {
     if (isLoggedIn) {
       setIsLoggedIn(false);
       sessionStorage.removeItem("guide_email");
+      sessionStorage.removeItem("admin_email");
+      sessionStorage.removeItem("tourist_email");
       sessionStorage.removeItem("Name");
       window.location.reload();
     } else {

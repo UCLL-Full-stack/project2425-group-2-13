@@ -87,7 +87,7 @@ const Guide_Dashboard: React.FC = () => {
     }
   };
 
-  // Handle editing a tour
+  // Handle editing a tour 
   const handleEditTour = async (id: number, updatedTour: Tour) => {
     setIsLoading(true);
     try {
